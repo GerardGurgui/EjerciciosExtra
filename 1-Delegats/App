@@ -1,0 +1,137 @@
+package modul1;
+
+import java.util.Scanner;
+
+public class App {
+    
+    public static void main(String[] args) {
+        
+        
+        
+        int numAlumnes = demanarNum("Introdueix quants alumnes votarán");
+        System.out.println("Total d'alumnes: " +numAlumnes);
+        
+        System.out.println("Votacions: Introdueix 1 per votar al delegat A" 
+                +  ", 2 per el delegat B"
+                + " i 3 per votar en blanc");
+        votacions(numAlumnes);
+        
+        
+    }
+    
+   
+    
+    static void votacions(int numAlumnes){
+        
+        int vot;
+        int votsDelegatA = 0;
+        int votsDelegatB = 0;
+        
+        for (int i = 0; i < numAlumnes; i++) {
+
+        System.out.print("Vot del alumne: " +(i+1)+ " :");
+        vot = demanarNumVotacio(1, 3);
+        
+            switch (vot) {
+                
+                case 1:
+                    votsDelegatA += 1;
+                    System.out.println("Vot per el delegat A");
+                    break;
+                case 2:
+                    votsDelegatB += 1;
+                    System.out.println("Vot per el delegat B");
+                    break;
+                case 3:
+                    System.out.println("Vot en blanc");
+                    break;
+            }
+            
+        }
+        
+        if (votsDelegatA > votsDelegatB) {
+            
+            System.out.println("Ha guanyat el delegat A amb un total de " +votsDelegatA+ " vots");
+            
+        } else if (votsDelegatA < votsDelegatB) {
+            
+            System.out.println("Ha guanyat el delegat B amb un total de " +votsDelegatB+ " vots");
+            
+        } else {
+            
+            System.out.println("Empat de delegats");
+        }
+        
+    }
+    
+    
+    
+    
+    
+    static int demanarNum(String texto){
+        
+        Scanner input = new Scanner(System.in);
+        
+        int numUsuari = 0;
+        boolean error = false;
+        
+        do {         
+            
+            try {
+                
+                System.out.println(texto);
+                numUsuari = input.nextInt();
+                error = true;
+                
+            } catch (Exception e) {
+                
+                System.out.println("Error de format, has d'introduir un número");
+            }
+            
+            input.nextLine();
+            
+        } while (error == false);
+        
+        return numUsuari;
+    }
+    
+    
+    
+    
+    static int demanarNumVotacio(int min, int max){
+        
+        Scanner input = new Scanner(System.in);
+        
+        int numUsuari = 0;
+        boolean error = false;
+    
+        do {
+
+            do {
+
+                try {
+
+                    numUsuari = input.nextInt();
+                    error = true;
+
+                } catch (Exception e) {
+                    
+                    System.out.println("Error de format, has d'introduir un número");
+                }
+
+                input.nextLine();
+
+            } while (error == false);
+
+            if (numUsuari<min || numUsuari > max) {
+
+                System.out.println("Tens que votar amb un 1 o un 2, o 3 per vot en blanc");
+            }
+
+        } while (numUsuari<min || numUsuari > max);
+
+        return numUsuari;
+    }
+    
+    
+}

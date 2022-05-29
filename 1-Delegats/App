@@ -1,3 +1,4 @@
+
 package modul1;
 
 import java.util.Scanner;
@@ -7,30 +8,24 @@ public class App {
     public static void main(String[] args) {
         
         
+        int vot;
+        int votsDelegatA = 0;
+        int votsDelegatB = 0;
+        
         
         int numAlumnes = demanarNum("Introdueix quants alumnes votarán");
         System.out.println("Total d'alumnes: " +numAlumnes);
         
         System.out.println("Votacions: Introdueix 1 per votar al delegat A" 
-                +  ", 2 per el delegat B"
-                + " i 3 per votar en blanc");
-        votacions(numAlumnes);
+        +  ", 2 per el delegat B"
+        + " i 3 per votar en blanc");
+
         
-        
-    }
-    
-   
-    
-    static void votacions(int numAlumnes){
-        
-        int vot;
-        int votsDelegatA = 0;
-        int votsDelegatB = 0;
         
         for (int i = 0; i < numAlumnes; i++) {
 
-        System.out.print("Vot del alumne: " +(i+1)+ " :");
-        vot = demanarNumVotacio(1, 3);
+            System.out.print("Vot del alumne: " +(i+1)+ " :");
+            vot = demanarNumVotacio(1, 3);
         
             switch (vot) {
                 
@@ -49,6 +44,7 @@ public class App {
             
         }
         
+        
         if (votsDelegatA > votsDelegatB) {
             
             System.out.println("Ha guanyat el delegat A amb un total de " +votsDelegatA+ " vots");
@@ -62,10 +58,10 @@ public class App {
             System.out.println("Empat de delegats");
         }
         
+        
     }
     
-    
-    
+   
     
     
     static int demanarNum(String texto){

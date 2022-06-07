@@ -1,0 +1,157 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+public class App {
+    
+    public static void main(String[] args) {
+        
+        
+        ArrayList<String> llistaNoms = new ArrayList<>();
+        ArrayList<String> llistaCiutats = new ArrayList<>();
+        ArrayList<String> listaHastags = new ArrayList<>();
+        
+        
+        
+        
+        lecturaGuardarFitxer(llistaNoms,llistaCiutats,listaHastags);
+        
+        
+        recorreLlistaNoms(llistaNoms);
+        recorreLlistaCiutats(llistaCiutats);
+        recorreLlistaHastags(listaHastags);
+        
+        
+        
+        
+    }
+    
+    
+    
+    static void lecturaGuardarFitxer(ArrayList<String> llistaNoms, ArrayList<String> llistaCiutats, ArrayList<String> llistaHashtags){
+        
+        //LECTURA DEL FITXER
+        File archivo;
+        FileReader fr = null;
+        BufferedReader br;
+        String textoFichero;
+        String ciutats;
+        String arrobas;
+        String hashtags;
+        
+        
+        StringTokenizer siguiente;
+        
+        
+        try {
+            
+            archivo = new File("C:\\Users\\formacio\\Desktop\\Gerard\\Sprint1\\Extras\\palabras.csv");   
+            fr = new FileReader(archivo); 
+            br = new BufferedReader(fr); // Creem un BfReader per poder llegir líneas completas 
+
+            while((textoFichero = br.readLine()) != null) {
+
+               siguiente = new StringTokenizer(textoFichero); 
+
+                if (siguiente.hasMoreTokens()){
+                    
+                    
+                    
+                    if (textoFichero.charAt(0) == '@') {
+                        
+                        arrobas = siguiente.nextToken();
+                        llistaNoms.add(arrobas);
+                        
+                        
+                    } else if(textoFichero.charAt(0) == '#'){
+                        
+                        hashtags = siguiente.nextToken();
+                        llistaHashtags.add(hashtags);
+                        
+                    } else{
+                        
+                        ciutats = siguiente.nextToken();
+                        llistaCiutats.add(ciutats);
+                    }
+                }
+           }
+            
+               
+        } catch (FileNotFoundException e) {  //Obrir arxius i llegir-los pot donar errors no controlats, els hem de controlar amb try catch
+           
+            System.out.println("No existeix el fitxer");
+            
+            
+        }catch (IOException e2) {
+           
+            System.out.println("Error de entrada / sortida");
+           
+        }
+        finally{    //Introduim un finally que s'executará si o si, per que volem tancar el arxiu després d'utilitzar-lo
+            
+            try {
+                
+                if (null != fr) {
+                    
+                    fr.close();
+                }
+                
+            } catch (Exception e2) {
+                
+                e2.printStackTrace();
+            }
+        }
+    }
+    
+    /////////////
+    // STRING TOKENIZER PER SEPARAR CAMPS!!! 
+    
+    //PER BUSCAR REPETITS EXEMPLE HASHTAG-- FOR AMB UN AUX--> AUX.EQUALS VALUEOF (ARRAY.GET(I);
+    // IF COINCIDE AUX CON NOMBRE DE LA LISTA + 1 CONT, SE SUMA CONT + NOMBRE
+    //
+   
+    
+    
+    
+    static void recorreLlistaNoms(ArrayList<String> noms ){
+        
+        System.out.println("----------NOMS-----------");
+        
+         for (String llistaNoms : noms) {
+             
+             System.out.println("Arrobas" +llistaNoms);
+             
+            }   
+    }
+    
+    
+    
+    static void recorreLlistaCiutats(ArrayList<String> ciutats ){
+        
+        System.out.println("-----------ARROBAS-----------");
+        
+         for (String llistaCiutats : ciutats) {
+             
+             System.out.println("Arrobas" +llistaCiutats);
+             
+            }   
+    }
+    
+    static void recorreLlistaHastags(ArrayList<String> hastags ){
+        
+        System.out.println("------------HASTAGS------------");
+        
+         for (String llistaHastags : hastags) {
+             
+             System.out.println("Arrobas" +llistaHastags);
+             
+            }   
+    }
+    
+    
+}

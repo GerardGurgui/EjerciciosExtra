@@ -1,98 +1,78 @@
+package Backend.Extras.Hashtags;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class App {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         
         
-        ArrayList<String> llistaNoms = new ArrayList<>();
-        ArrayList<String> llistaCiutats = new ArrayList<>();
-        ArrayList<String> listaHastags = new ArrayList<>();
-        
-        
-        
-        
-        lecturaGuardarFitxer(llistaNoms,llistaCiutats,listaHastags);
-        
-        
-        recorreLlistaNoms(llistaNoms);
-        recorreLlistaCiutats(llistaCiutats);
-        recorreLlistaHastags(listaHastags);
+        List<String> llistaTotal = new ArrayList<String>();
+        ArrayList<String> blancs = new ArrayList<String>();
+        ArrayList<String> arronbas = new ArrayList<String>();
+        ArrayList<String> hastags = new ArrayList<String>();
         
         
         
+        llegirFitxer(llistaTotal);
+        distribuirLlistas(llistaTotal,blancs,arronbas,hastags);
         
+
     }
     
     
     
-    static void lecturaGuardarFitxer(ArrayList<String> llistaNoms, ArrayList<String> llistaCiutats, ArrayList<String> llistaHashtags){
-        
-        //LECTURA DEL FITXER
-        File archivo;
-        FileReader fr = null;
-        BufferedReader br;
-        String textoFichero;
-        String ciutats;
-        String arrobas;
-        String hashtags;
-        
-        
+   static void llegirFitxer(List<String> llistaTotal) {
+       
+       
+        String llista;
         StringTokenizer siguiente;
-        
+        FileReader fr = null;
+
         
         try {
             
-            archivo = new File("C:\\Users\\formacio\\Desktop\\Gerard\\Sprint1\\Extras\\palabras.csv");   
-            fr = new FileReader(archivo); 
-            br = new BufferedReader(fr); // Creem un BfReader per poder llegir líneas completas 
+            
+            File fitxer = new File("C:\\Users\\gerri\\OneDrive\\Escritorio\\palabras.csv");
+            fr = new FileReader(fitxer);
+            BufferedReader br = new BufferedReader(fr);
+            
+            
+            while ((llista = br.readLine()) != null) {                
 
-            while((textoFichero = br.readLine()) != null) {
+                siguiente = new StringTokenizer(llista, ";");
 
-               siguiente = new StringTokenizer(textoFichero); 
+                if (siguiente.hasMoreTokens()) {
 
-                if (siguiente.hasMoreTokens()){
-                    
-                    
-                    
-                    if (textoFichero.charAt(0) == '@') {
-                        
-                        arrobas = siguiente.nextToken();
-                        llistaNoms.add(arrobas);
-                        
-                        
-                    } else if(textoFichero.charAt(0) == '#'){
-                        
-                        hashtags = siguiente.nextToken();
-                        llistaHashtags.add(hashtags);
-                        
-                    } else{
-                        
-                        ciutats = siguiente.nextToken();
-                        llistaCiutats.add(ciutats);
+                    for (int i = 0; i < 10; i++) {
+
+                        llistaTotal.add(siguiente.nextToken());
                     }
                 }
-           }
+
+            }
+              
+        }catch (FileNotFoundException e) {
             
-               
-        } catch (FileNotFoundException e) {  //Obrir arxius i llegir-los pot donar errors no controlats, els hem de controlar amb try catch
-           
             System.out.println("No existeix el fitxer");
             
+        }catch(IOException e2){
             
-        }catch (IOException e2) {
-           
-            System.out.println("Error de entrada / sortida");
-           
+            System.out.println("Error entrada/sortida");
+            
+        }catch(Exception e3){
+            
+            System.out.println("Error fatal");
         }
-        finally{    //Introduim un finally que s'executará si o si, per que volem tancar el arxiu després d'utilitzar-lo
+        
+         finally{    //Introduim un finally que s'executará si o si, per que volem tancar el arxiu després d'utilitzar-lo
             
             try {
                 
@@ -106,8 +86,68 @@ public class App {
                 e2.printStackTrace();
             }
         }
-    }
-    
+        
+   }
+   
+   
+   static void distribuirLlistas(List<String> llistaTotal, ArrayList<String> blancs,
+                                ArrayList<String> arronbas, ArrayList<String> hastags){
+       
+       
+       for (String llistaTotalFor : llistaTotal) {
+           
+           if (llistaTotalFor.charAt(0) == '@') {
+               
+               arronbas.add(llistaTotalFor);
+               
+           } else if (llistaTotalFor.charAt(0) == '#'){
+               
+               hastags.add(llistaTotalFor);
+               
+           } else {
+               
+               blancs.add(llistaTotalFor);
+           }
+           
+       }
+       
+       
+       
+       System.out.println("-------BLANCS--------");
+       
+       for (String blanc : blancs) {
+           
+           System.out.println(blanc);
+           
+       }
+           
+        System.out.println("-------Arrobas--------");
+
+       
+       for (String arro : arronbas) {
+           
+           System.out.println(arro);
+           
+       }
+           
+       
+        System.out.println("-------hastags--------");
+
+       
+       for (String h : hastags) {
+           
+           System.out.println(h);
+           
+       }
+           
+       
+       
+       
+       
+   }
+   
+   
+   
     /////////////
     // STRING TOKENIZER PER SEPARAR CAMPS!!! 
     
@@ -115,43 +155,6 @@ public class App {
     // IF COINCIDE AUX CON NOMBRE DE LA LISTA + 1 CONT, SE SUMA CONT + NOMBRE
     //
    
-    
-    
-    
-    static void recorreLlistaNoms(ArrayList<String> noms ){
-        
-        System.out.println("----------NOMS-----------");
-        
-         for (String llistaNoms : noms) {
-             
-             System.out.println("Arrobas" +llistaNoms);
-             
-            }   
-    }
-    
-    
-    
-    static void recorreLlistaCiutats(ArrayList<String> ciutats ){
-        
-        System.out.println("-----------ARROBAS-----------");
-        
-         for (String llistaCiutats : ciutats) {
-             
-             System.out.println("Arrobas" +llistaCiutats);
-             
-            }   
-    }
-    
-    static void recorreLlistaHastags(ArrayList<String> hastags ){
-        
-        System.out.println("------------HASTAGS------------");
-        
-         for (String llistaHastags : hastags) {
-             
-             System.out.println("Arrobas" +llistaHastags);
-             
-            }   
-    }
-    
+   
     
 }

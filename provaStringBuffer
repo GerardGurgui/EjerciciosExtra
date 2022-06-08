@@ -12,7 +12,7 @@ public class App {
     
     public static void main(String[] args) throws Exception{
         
-        StringBuffer sb = new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer();
         
         ArrayList<String> llista = new ArrayList<>();
         
@@ -29,7 +29,7 @@ public class App {
         File document = new File("C:\\Users\\formacio\\Desktop\\Gerard\\hola.txt"); //información sobre el fichero 
         FileWriter  fw = new FileWriter(document); //Stream conectado al fichero a escribir.
         BufferedWriter bw = new BufferedWriter(fw); //Buffer que almacena datos hacia el stream
-        bw.append(sb);
+        bw.append(stringBuffer);
         bw.close();
         
     }

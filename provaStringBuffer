@@ -1,0 +1,37 @@
+package Extras.provaEscriureFitxer;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+
+public class App {
+    
+    
+    public static void main(String[] args) throws Exception{
+        
+        StringBuffer sb = new StringBuffer();
+        
+        ArrayList<String> llista = new ArrayList<>();
+        
+        String hola = "hola";
+        String ade = "ade";
+        
+        llista.add(hola);
+        llista.add(ade);
+        
+        sb.append(hola);
+        sb.append(ade);
+        
+        
+        File document = new File("C:\\Users\\formacio\\Desktop\\Gerard\\hola.txt"); //información sobre el fichero 
+        FileWriter  fw = new FileWriter(document); //Stream conectado al fichero a escribir.
+        BufferedWriter bw = new BufferedWriter(fw); //Buffer que almacena datos hacia el stream
+        bw.append(sb);
+        bw.close();
+        
+    }
+    
+}
